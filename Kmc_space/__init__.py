@@ -1,4 +1,4 @@
-"""Hypernoa Astrum - OpenEnv environment for training aligned intelligence."""
+""" Astrum - OpenEnv environment for training aligned intelligence."""
 
 from .models import AstrumAction, AstrumObservation
 from .client import AstrumEnv

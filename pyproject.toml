@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hypernoa-astrum"
+name = "kmc-algo"
 version = "0.1.0"
 description = "Adaptive environments for training aligned, multi-objective intelligence"
 readme = "README.md"
@@ -16,7 +16,7 @@ keywords = [
     "reinforcement-learning",
     "alignment",
     "multi-objective",
-    "adaptive-environments",
+    "kmc-algo",
     "ai-safety",
 ]
 classifiers = [
@@ -24,9 +24,6 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
@@ -44,26 +41,20 @@ dev = [
     "pytest-cov>=4.0",
     "ruff>=0.4",
 ]
-all = ["hypernoa-astrum[demo,openenv,dev]"]
-
-[project.urls]
-Homepage = "https://github.com/naidu1212/hypernoa-astrum"
-Repository = "https://github.com/naidu1212/hypernoa-astrum"
-Issues = "https://github.com/naidu1212/hypernoa-astrum/issues"
+all = ["kmc-algo[demo,openenv,dev]"]
 
 [project.scripts]
-astrum-local = "run_astrum_local:main"
-astrum-server = "hypernoa.astrum_env.server:run"
+# Corrected Entry Points (No leading dots, updated to Kmcalgo folder)
+kmc-local = "main:main"
+kmc-server = "Kmcalgo.kmc_env.server:run"
 
 [tool.setuptools.packages.find]
-include = ["hypernoa*"]
+# Ensure only our rebranded package is included
+include = ["Kmcalgo*"]
 
 [tool.ruff]
 target-version = "py310"
 line-length = 100
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "W", "UP"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

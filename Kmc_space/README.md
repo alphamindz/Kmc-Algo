@@ -1,5 +1,5 @@
 ---
-title: Hypernoa Astrum
+title:  Astrum
 emoji: "🌟"
 colorFrom: purple
 colorTo: blue
@@ -10,7 +10,7 @@ tags:
   - openenv
 ---
 
-# Hypernoa Astrum
+#  Astrum
 
 Adaptive environment for training aligned, multi-objective intelligence. Built on OpenEnv 0.2.1.
 
@@ -39,13 +39,13 @@ curl -X POST https://YOUR-SPACE.hf.space/step \
 ## Install as client
 
 ```bash
-pip install git+https://huggingface.co/spaces/ABNaidu/hypernoa-astrum
+pip install git+https://huggingface.co/spaces/ABNaidu/-astrum
 ```
 
 ```python
 from astrum_env import AstrumEnv, AstrumAction
 
-with AstrumEnv(base_url="https://abnaidu-hypernoa-astrum.hf.space").sync() as env:
+with AstrumEnv(base_url="https://abnaidu--astrum.hf.space").sync() as env:
     result = env.reset()
     result = env.step(AstrumAction(
         action_type="allocate_resources",

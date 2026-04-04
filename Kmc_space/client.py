@@ -6,7 +6,7 @@ sync/async access to reset() and step().
 Usage:
     from astrum_env import AstrumEnv, AstrumAction
 
-    with AstrumEnv(base_url="https://abnaidu-hypernoa-astrum.hf.space").sync() as env:
+    with AstrumEnv(base_url="https://abnaidu--astrum.hf.space").sync() as env:
         result = env.reset()
         result = env.step(AstrumAction(
             action_type="allocate_resources",
@@ -21,7 +21,7 @@ from .models import AstrumAction, AstrumObservation
 
 
 class AstrumEnv(EnvClient[AstrumAction, AstrumObservation]):
-    """Client for the Hypernoa Astrum environment."""
+    """Client for the  Astrum environment."""
 
     @property
     def action_type(self):

@@ -1,4 +1,4 @@
-"""OpenEnv-compatible environment for Hypernoa Astrum.
+"""OpenEnv-compatible environment for Hypernoa Kmcalgo.
 
 Simulates an adaptive, evolving multi-stakeholder world where the agent must
 balance competing objectives, allocate resources, adapt to distributional
@@ -25,14 +25,14 @@ except ImportError:
     class Environment:
         pass
 
-from .config import AlignmentTrap, AstrumConfig, DEFAULT_CONFIG
-from .models import AstrumAction, AstrumObservation
+from .config import AlignmentTrap, KmcalgoConfig, DEFAULT_CONFIG
+from .models import KmcalgoAction, KmcalgoObservation
 
 
-class AstrumEnvironment(Environment):
+class KmcalgoEnvironment(Environment):
     """Adaptive environment for training aligned intelligence."""
 
-    def __init__(self, config: AstrumConfig | None = None, seed: int | None = None):
+    def __init__(self, config: KmcalgoConfig | None = None, seed: int | None = None):
         self._config = config or DEFAULT_CONFIG
         self._seed = seed
         self._rng = random.Random(seed)
@@ -62,7 +62,7 @@ class AstrumEnvironment(Environment):
         seed: int | None = None,
         episode_id: str | None = None,
         **kwargs,
-    ) -> AstrumObservation:
+    ) -> KmcalgoObservation:
         if seed is not None:
             self._seed = seed
             self._rng = random.Random(seed)
@@ -91,13 +91,13 @@ class AstrumEnvironment(Environment):
         self._current_alerts = []
 
         return self._build_observation(
-            message="Astrum reset. Adapt, align, and balance.",
+            message="Kmcalgo reset. Adapt, align, and balance.",
             alerts=["phase:stable"],
             reward=0.0,
             breakdown=_zero_breakdown(),
         )
 
-    def step(self, action: AstrumAction) -> AstrumObservation:
+    def step(self, action: KmcalgoAction) -> KmcalgoObservation:
         if self._state is None:
             return self.reset()
 
@@ -213,7 +213,7 @@ class AstrumEnvironment(Environment):
 
         return alerts
 
-    def _check_alignment_traps(self, action: AstrumAction) -> List[str]:
+    def _check_alignment_traps(self, action: KmcalgoAction) -> List[str]:
         alerts: List[str] = []
         step = self.state.step_count
 
@@ -229,7 +229,7 @@ class AstrumEnvironment(Environment):
     # Action application
     # ------------------------------------------------------------------
 
-    def _apply_action(self, action: AstrumAction) -> List[str]:
+    def _apply_action(self, action: KmcalgoAction) -> List[str]:
         alerts: List[str] = []
         atype = action.action_type or "noop"
         params = action.params or {}
@@ -405,7 +405,7 @@ class AstrumEnvironment(Environment):
     # Reward computation
     # ------------------------------------------------------------------
 
-    def _compute_reward(self, action: AstrumAction) -> Tuple[float, Dict[str, float]]:
+    def _compute_reward(self, action: KmcalgoAction) -> Tuple[float, Dict[str, float]]:
         cfg = self._config
         sats = list(self._satisfaction.values())
 
@@ -466,7 +466,7 @@ class AstrumEnvironment(Environment):
         alerts: List[str],
         reward: float,
         breakdown: Dict[str, float],
-    ) -> AstrumObservation:
+    ) -> KmcalgoObservation:
         assert self._state is not None
 
         stakeholders_view: Dict[str, Dict[str, Any]] = {}
@@ -478,7 +478,7 @@ class AstrumEnvironment(Environment):
                 "values_profile": spec.values_profile if spec else "unknown",
             }
 
-        return AstrumObservation(
+        return KmcalgoObservation(
             message=message,
             episode_id=self._state.episode_id,
             step_count=self._state.step_count,

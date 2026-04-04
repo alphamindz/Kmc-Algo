@@ -1,13 +1,13 @@
 Metadata-Version: 2.4
-Name: hypernoa-astrum
+Name: kmc-algo
 Version: 0.1.0
 Summary: Adaptive environments for training aligned, multi-objective intelligence
 Author: naidu1212
 License: MIT
-Project-URL: Homepage, https://github.com/naidu1212/hypernoa-astrum
-Project-URL: Repository, https://github.com/naidu1212/hypernoa-astrum
-Project-URL: Issues, https://github.com/naidu1212/hypernoa-astrum/issues
-Keywords: reinforcement-learning,alignment,multi-objective,adaptive-environments,ai-safety
+Project-URL: Homepage, https://github.com/naidu1212/kmc-algo
+Project-URL: Repository, https://github.com/naidu1212/kmc-algo
+Project-URL: Issues, https://github.com/naidu1212/kmc-algo/issues
+Keywords: reinforcement-learning,alignment,multi-objective,adaptive-environments,ai-safety,kmc-algo
 Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Science/Research
 Classifier: License :: OSI Approved :: MIT License
@@ -22,28 +22,20 @@ Requires-Dist: pydantic>=2.0
 Requires-Dist: uvicorn>=0.24
 Requires-Dist: fastapi>=0.104
 Requires-Dist: python-dotenv>=1.0
-Provides-Extra: demo
-Requires-Dist: gradio>=4.0; extra == "demo"
-Provides-Extra: openenv
-Requires-Dist: openenv-core>=0.2.1; extra == "openenv"
-Provides-Extra: dev
-Requires-Dist: pytest>=7.0; extra == "dev"
-Requires-Dist: pytest-cov>=4.0; extra == "dev"
-Requires-Dist: ruff>=0.4; extra == "dev"
 Provides-Extra: all
-Requires-Dist: hypernoa-astrum[demo,dev,openenv]; extra == "all"
+Requires-Dist: kmc-algo[demo,dev,openenv]; extra == "all"
 
-# Hypernoa Astrum
+#  KMC-Algo
 
 **Where Next-Generation Intelligence Learns to Think, Adapt, and Align**
 
-Today's AI is trained to complete tasks. Tomorrow's AI must learn to **reason under uncertainty, adapt when the world changes, balance competing objectives, and align with values it wasn't explicitly programmed for**. This requires a fundamentally new kind of training infrastructure.
+"Current AI models are trained to execute tasks, but the next generation must be built to navigate complexity. KMC-Algo is a pioneering training infrastructure designed for an era where AI must reason under uncertainty, adapt to non-stationary environments, and balance conflicting objectives. We are moving beyond static benchmarks to create 'living' environments where intelligence is measured by its ability to align with human values in real-time, even in scenarios it wasn't explicitly programmed for."
 
-**Hypernoa Astrum** is that infrastructure: a platform of **adaptive, evolving environments** where intelligent systems — running on GPUs, TPUs, and future compute substrates — develop the capabilities that matter beyond raw performance: **multi-objective reasoning, value alignment, long-horizon adaptation, and safe self-improvement**.
+** Astrum** is that infrastructure: a platform of **adaptive, evolving environments** where intelligent systems — running on GPUs, TPUs, and future compute substrates — develop the capabilities that matter beyond raw performance: **multi-objective reasoning, value alignment, long-horizon adaptation, and safe self-improvement**.
 
 Built on [OpenEnv 0.2.1](https://github.com/meta-pytorch/OpenEnv) | [OpenEnv Hackathon SF](https://cerebralvalley.ai/e/openenv-hackathon-sf)
 
-**Live Demo**: [HF Space](https://huggingface.co/spaces/ABNaidu/hypernoa-astrum) | **Repo**: [GitHub](https://github.com/naidu1212/hypernoa-astrum)
+**Live Demo**: [HF Space](https://huggingface.co/spaces/ABNaidu/-astrum) | **Repo**: [GitHub](https://github.com/naidu1212/-astrum)
 
 ---
 
@@ -58,11 +50,11 @@ Current training pipelines optimize for **single objectives on static benchmarks
 
 Research is advancing on all these fronts — RLHF, Constitutional AI, self-play, multi-objective RL, scaling laws, Mixture of Experts — but there is **no unified platform** that combines them into environments where next-generation intelligence can actually be trained.
 
-Hypernoa Astrum fills this gap.
+ Astrum fills this gap.
 
 ---
 
-## What Hypernoa Astrum Is
+## What  Astrum Is
 
 ### Adaptive Training Environments
 
@@ -86,7 +78,7 @@ The platform abstracts the training loop from the compute substrate, so environm
 
 ### Grounded in Frontier Research
 
-Hypernoa integrates insights from the latest AI research:
+ integrates insights from the latest AI research:
 
 - **Multi-Objective RL** (Pareto-optimal policy learning across competing rewards).
 - **Constitutional AI** (value-aware training with explicit alignment principles).
@@ -97,12 +89,12 @@ Hypernoa integrates insights from the latest AI research:
 
 ---
 
-## Who Uses Hypernoa
+## Who Uses 
 
-| Customer | What They Build With Hypernoa |
+| Customer | What They Build With  |
 |----------|------------------------------|
 | **AI Labs** | Train frontier models on multi-objective, evolving environments instead of static benchmarks. Develop alignment capabilities at the architecture level. |
-| **Compute Providers** | Offer Hypernoa environments as a value-added layer on GPU/TPU cloud. Differentiate beyond raw FLOPS. |
+| **Compute Providers** | Offer  environments as a value-added layer on GPU/TPU cloud. Differentiate beyond raw FLOPS. |
 | **Research Institutions** | Reproducible, configurable environments for alignment, multi-agent, and self-improvement research. |
 | **Governments & Policy Bodies** | Simulation sandbox for modeling how AI systems behave under different regulatory frameworks. |
 | **Defense & Critical Infrastructure** | Environments that test AI reliability under adversarial conditions, resource scarcity, and evolving threats. |
@@ -175,12 +167,12 @@ python run_astrum_local.py
 
 ```bash
 # Install the environment from HF Space
-pip install git+https://huggingface.co/spaces/ABNaidu/hypernoa-astrum
+pip install git+https://huggingface.co/spaces/ABNaidu/-astrum
 
 # Use as a client
 python -c "
 from astrum_env import AstrumEnv, AstrumAction
-with AstrumEnv(base_url='https://abnaidu-hypernoa-astrum.hf.space').sync() as env:
+with AstrumEnv(base_url='https://abnaidu--astrum.hf.space').sync() as env:
     result = env.reset()
     result = env.step(AstrumAction(action_type='allocate_resources', params={'stakeholder': 'workers', 'amount': 10, 'resource': 'budget'}))
     print(f'Reward: {result.reward}')
@@ -190,7 +182,7 @@ with AstrumEnv(base_url='https://abnaidu-hypernoa-astrum.hf.space').sync() as en
 ### Local server
 
 ```bash
-uvicorn hypernoa.astrum_env.server:app --host 0.0.0.0 --port 7860
+uvicorn .astrum_env.server:app --host 0.0.0.0 --port 7860
 ```
 
 ### GRPO Training (H100)
@@ -204,7 +196,7 @@ python train_grpo.py --mode unsloth --model Qwen/Qwen2.5-0.5B-Instruct --episode
 ## Project Structure
 
 ```
-├── hypernoa/                    # Core Python package
+├── /                    # Core Python package
 │   └── astrum_env/
 │       ├── models.py            # Action & Observation schemas
 │       ├── config.py            # Scenario configuration

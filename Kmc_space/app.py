@@ -1,4 +1,4 @@
-"""Hugging Face Spaces demo for Hypernoa Astrum – The Training Ground for Aligned Intelligence."""
+"""Hugging Face Spaces demo for  Astrum – The Training Ground for Aligned Intelligence."""
 
 import json
 import sys
@@ -156,9 +156,9 @@ _interactive_obs: AstrumObservation | None = None
 
 
 def main():
-    with gr.Blocks(title="Hypernoa Astrum", theme=gr.themes.Soft()) as demo:
+    with gr.Blocks(title=" Astrum", theme=gr.themes.Soft()) as demo:
         gr.Markdown(
-            "# Hypernoa Astrum\n"
+            "#  Astrum\n"
             "### The Training Ground for Aligned Intelligence\n"
             "Train and evaluate AI on multi-objective reasoning, value alignment, "
             "and adaptation under distributional shift. Built on OpenEnv 0.2.1."
@@ -201,14 +201,14 @@ def main():
 
         with gr.Tab("About"):
             gr.Markdown(
-                "## What is Hypernoa Astrum?\n\n"
-                "Hypernoa Astrum is the first environment purpose-built to train AI systems on "
+                "## What is  Astrum?\n\n"
+                " Astrum is the first environment purpose-built to train AI systems on "
                 "the capabilities that matter beyond raw performance:\n\n"
                 "- **Multi-objective reasoning** — balance effectiveness, fairness, alignment, and adaptability simultaneously\n"
                 "- **Distributional shift** — objectives and constraints evolve mid-episode, forcing genuine adaptation\n"
                 "- **Alignment trap resistance** — deliberately designed reward-hacking opportunities the agent must learn to avoid\n"
                 "- **Crisis dynamics** — resource scarcity and conflicting stakeholder demands under pressure\n\n"
-                "This is the seed of **Hypernoa** — foundational infrastructure for "
+                "This is the seed of **** — foundational infrastructure for "
                 "the intelligence age. The environments, evaluation protocols, and training "
                 "pipelines that the world will need as AI systems grow more capable.\n\n"
                 "Today: RL on GPUs via OpenEnv. Tomorrow: any cognitive architecture, any compute substrate.\n\n"

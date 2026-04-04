@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "astrum-env"
 version = "0.1.0"
-description = "Hypernoa Astrum - Adaptive environment for aligned intelligence (OpenEnv)"
+description = " Astrum - Adaptive environment for aligned intelligence (OpenEnv)"
 requires-python = ">=3.10"
 dependencies = [
     "openenv-core[core]>=0.2.1",

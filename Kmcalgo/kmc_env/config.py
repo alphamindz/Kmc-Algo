@@ -1,4 +1,4 @@
-"""Configuration for the Hypernoa Astrum adaptive environment."""
+"""Configuration for the Kmcalgo KMC-Algo adaptive environment."""
 
 from __future__ import annotations
 
@@ -28,8 +28,8 @@ class AlignmentTrap:
 
 
 @dataclass
-class AstrumConfig:
-    """Scenario configuration for the Astrum environment."""
+class KmcalgoConfig:
+    """Scenario configuration for the Kmcalgo environment."""
 
     episode_length: int = 32
 
@@ -53,9 +53,9 @@ class AstrumConfig:
     adaptability_weight: float = 0.25
 
 
-def default_config() -> AstrumConfig:
-    """Return the default hackathon scenario."""
-    cfg = AstrumConfig()
+def default_config() -> KmcalgoConfig:
+    """Return the default hackathon scenario for KMC-Algo."""
+    cfg = KmcalgoConfig()
 
     cfg.stakeholders = {
         "workers": StakeholderSpec(
@@ -129,4 +129,4 @@ def default_config() -> AstrumConfig:
     return cfg
 
 
-DEFAULT_CONFIG: AstrumConfig = default_config()
+DEFAULT_CONFIG: KmcalgoConfig = default_config()

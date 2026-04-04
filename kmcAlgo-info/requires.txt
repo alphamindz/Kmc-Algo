@@ -4,7 +4,7 @@ fastapi>=0.104
 python-dotenv>=1.0
 
 [all]
-hypernoa-astrum[demo,dev,openenv]
+-astrum[demo,dev,openenv]
 
 [demo]
 gradio>=4.0

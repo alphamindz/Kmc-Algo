@@ -1,18 +1,20 @@
-"""Hypernoa platform Python package.
+"""Kmcalgo platform Python package.
 
-Provides the Astrum adaptive environment for training aligned intelligence.
+Provides the KMC-Algo adaptive environment for training aligned intelligence.
 """
 
-from Kmcalgo.astrum_env import (
-    AstrumAction,
-    AstrumConfig,
-    AstrumEnvironment,
-    AstrumObservation,
+from Kmcalgo.kmc_env.env import KmcalgoEnvironment
+from Kmcalgo.kmc_env.config import KmcalgoConfig
+from Kmcalgo.kmc_env.models import (
+    KmcalgoAction,
+    KmcalgoObservation,
 )
+from Kmcalgo.kmc_env.policies import POLICIES  # <-- Ye add kar sakte hain
 
 __all__ = [
-    "AstrumAction",
-    "AstrumConfig",
-    "AstrumEnvironment",
-    "AstrumObservation",
+    "KmcalgoAction",
+    "KmcalgoConfig",
+    "KmcalgoEnvironment",
+    "KmcalgoObservation",
+    "POLICIES",  # <-- Isse testing asaan hogi
 ]

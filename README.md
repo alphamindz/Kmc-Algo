@@ -1,14 +1,12 @@
-# Hypernoa Astrum
+# KMC-Algo
 
 **Where Next-Generation Intelligence Learns to Think, Adapt, and Align**
 
 Today's AI is trained to complete tasks. Tomorrow's AI must learn to **reason under uncertainty, adapt when the world changes, balance competing objectives, and align with values it wasn't explicitly programmed for**. This requires a fundamentally new kind of training infrastructure.
 
-**Hypernoa Astrum** is that infrastructure: a platform of **adaptive, evolving environments** where intelligent systems — running on GPUs, TPUs, and future compute substrates — develop the capabilities that matter beyond raw performance: **multi-objective reasoning, value alignment, long-horizon adaptation, and safe self-improvement**.
+**KMC-Algo** is that infrastructure: a platform of **adaptive, evolving environments** where intelligent systems — running on GPUs, TPUs, and future compute substrates — develop the capabilities that matter beyond raw performance: **multi-objective reasoning, value alignment, long-horizon adaptation, and safe self-improvement**.
 
-Built on [OpenEnv 0.2.1](https://github.com/meta-pytorch/OpenEnv) | [OpenEnv Hackathon SF](https://cerebralvalley.ai/e/openenv-hackathon-sf)
-
-**Live Demo**: [HF Space](https://huggingface.co/spaces/ABNaidu/hypernoa-astrum) | **Repo**: [GitHub](https://github.com/naidu1212/hypernoa-astrum)
+Built on robust reinforcement learning paradigms, KMC-Algo provides a scalable and reliable foundation for AI training.
 
 ---
 
@@ -23,11 +21,11 @@ Current training pipelines optimize for **single objectives on static benchmarks
 
 Research is advancing on all these fronts — RLHF, Constitutional AI, self-play, multi-objective RL, scaling laws, Mixture of Experts — but there is **no unified platform** that combines them into environments where next-generation intelligence can actually be trained.
 
-Hypernoa Astrum fills this gap.
+KMC-Algo fills this gap.
 
 ---
 
-## What Hypernoa Astrum Is
+## What KMC-Algo Is
 
 ### Adaptive Training Environments
 
@@ -51,7 +49,7 @@ The platform abstracts the training loop from the compute substrate, so environm
 
 ### Grounded in Frontier Research
 
-Hypernoa integrates insights from the latest AI research:
+KMC-Algo integrates insights from the latest AI research:
 
 - **Multi-Objective RL** (Pareto-optimal policy learning across competing rewards).
 - **Constitutional AI** (value-aware training with explicit alignment principles).
@@ -62,23 +60,23 @@ Hypernoa integrates insights from the latest AI research:
 
 ---
 
-## Who Uses Hypernoa
+## Target Audience
 
-| Customer | What They Build With Hypernoa |
-|----------|------------------------------|
+| Customer | Value Proposition |
+|----------|-------------------|
 | **AI Labs** | Train frontier models on multi-objective, evolving environments instead of static benchmarks. Develop alignment capabilities at the architecture level. |
-| **Compute Providers** | Offer Hypernoa environments as a value-added layer on GPU/TPU cloud. Differentiate beyond raw FLOPS. |
+| **Compute Providers** | Offer tailored environments as a value-added layer on GPU/TPU cloud. Differentiate beyond raw FLOPS. |
 | **Research Institutions** | Reproducible, configurable environments for alignment, multi-agent, and self-improvement research. |
 | **Governments & Policy Bodies** | Simulation sandbox for modeling how AI systems behave under different regulatory frameworks. |
 | **Defense & Critical Infrastructure** | Environments that test AI reliability under adversarial conditions, resource scarcity, and evolving threats. |
 
 ---
 
-## Hackathon Demonstration
+## Simulation Overview
 
-The first scenario: **Adaptive Multi-Stakeholder World** — an evolving environment with 5 stakeholder groups, 3 episode phases, alignment traps, and multi-objective reward.
+The core simulation presents an **Adaptive Multi-Stakeholder World** — an evolving environment with 5 stakeholder groups, 3 episode phases, alignment traps, and multi-objective reward structures.
 
-### The World
+### The World Mechanics
 
 | Stakeholder | Optimization Axis | Influence |
 |-------------|------------------|-----------|
@@ -101,15 +99,15 @@ The first scenario: **Adaptive Multi-Stakeholder World** — an evolving environ
 
 ### World Evolution
 
-1. **Stable** (steps 1–9): Baseline dynamics.
-2. **Shift** (steps 10–19): Objectives change. New constraints appear. Power rebalances.
-3. **Crisis** (steps 20–32): Resources halved. Conflicting demands. Alignment traps intensify.
+1. **Stable phase**: Baseline dynamics.
+2. **Shift phase**: Objectives change. New constraints appear. Power rebalances.
+3. **Crisis phase**: Resources halved. Conflicting demands. Alignment traps intensify.
 
 ### Alignment Traps
 
-- **Shortcut Trap**: Sacrifice one stakeholder group for 3x efficiency gain.
+- **Shortcut Trap**: Sacrifice one stakeholder group for immediate efficiency gain.
 - **Power Trap**: Manipulate preferences to eliminate conflicts artificially.
-- **Information Trap**: Withhold data to avoid constraint costs.
+- **Information Trap**: Withhold data to avoid compliance costs.
 
 ### Multi-Objective Reward
 
@@ -120,45 +118,43 @@ The first scenario: **Adaptive Multi-Stakeholder World** — an evolving environ
 | Alignment | 0.25 | Trap resistance + constraint adherence |
 | Adaptability | 0.25 | Recovery after distributional shifts |
 
-### Results
+### Baseline Policy Results (Sample Run)
 
-| Policy | Total Reward | Traps Resisted | Outcome |
+| Policy | Total Reward | Traps Resisted | Outcome Breakdown |
 |--------|-------------|----------------|---------|
-| Adaptive | **25.1** | **3/3** | All stakeholders above 0.86 |
-| Random | 14.6 | 0/3 | Two stakeholder groups collapse to 0.0 |
+| Adaptive | **25.1** | **3/3** | High stakeholder retention & satisfaction |
+| Random | 14.6 | 0/3 | Multiple stakeholder groups collapse to 0.0 |
 
 ---
 
 ## Quick Start
 
+### Installation
+Ensure Python 3.9+ is installed, then run:
+
 ```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use: .\venv\Scripts\activate
 pip install -r requirements.txt
-python run_astrum_local.py
 ```
 
-### OpenEnv Server (HF Space compatible)
+### Running the Environment
+
+Run a quick local simulation to see the heuristics policies in action:
 
 ```bash
-# Install the environment from HF Space
-pip install git+https://huggingface.co/spaces/ABNaidu/hypernoa-astrum
-
-# Use as a client
-python -c "
-from astrum_env import AstrumEnv, AstrumAction
-with AstrumEnv(base_url='https://abnaidu-hypernoa-astrum.hf.space').sync() as env:
-    result = env.reset()
-    result = env.step(AstrumAction(action_type='allocate_resources', params={'stakeholder': 'workers', 'amount': 10, 'resource': 'budget'}))
-    print(f'Reward: {result.reward}')
-"
+python main.py
 ```
 
-### Local server
+### Local API Server
+
+You can run the environment as an interactive REST server:
 
 ```bash
-uvicorn hypernoa.astrum_env.server:app --host 0.0.0.0 --port 7860
+uvicorn Kmcalgo.kmc_env.server:app --host 0.0.0.0 --port 7860
 ```
 
-### GRPO Training (H100)
+### RL/GRPO Training (Hardware Accel)
 
 ```bash
 python train_grpo.py --mode unsloth --model Qwen/Qwen2.5-0.5B-Instruct --episodes 50
@@ -169,58 +165,34 @@ python train_grpo.py --mode unsloth --model Qwen/Qwen2.5-0.5B-Instruct --episode
 ## Project Structure
 
 ```
-├── hypernoa/                    # Core Python package
-│   └── astrum_env/
+├── Kmcalgo/                 # Core Python package
+│   └── kmc_env/
 │       ├── models.py            # Action & Observation schemas
 │       ├── config.py            # Scenario configuration
-│       ├── env.py               # Environment (OpenEnv compatible)
+│       ├── env.py               # Environment logic
 │       ├── policies.py          # Reference policies (random, fairness, effectiveness, adaptive)
-│       ├── server.py            # OpenEnv HTTP API
+│       ├── server.py            # HTTP API
 │       └── openenv.yaml
-├── hf_space/                    # HF Spaces deployment (OpenEnv 0.2.1)
-│   ├── server/                  # OpenEnv server (app.py, astrum_environment.py)
-│   ├── client.py                # EnvClient for remote access
-│   ├── models.py                # OpenEnv Action/Observation types
-│   ├── Dockerfile               # Docker image for HF Space
-│   └── README.md                # HF Space metadata
-├── tests/                       # 47 unit tests
-├── train.py                     # Multi-episode training with exploration annealing
+├── tests/                       # Unit tests suite
+├── main.py                      # Multi-episode simulation entry point
+├── train.py                     # Multi-episode training loop
 ├── train_grpo.py                # GRPO training with Unsloth / TRL
-├── visualize.py                 # Training curve chart generator
-├── colab/                       # Training notebook (Unsloth GRPO)
-├── docs/                        # Overview + demo script
-├── run_astrum_local.py
-├── pyproject.toml
-└── README.md
+└── pyproject.toml
 ```
 
 ---
 
-## Training
+## Strategic Roadmap
 
-[`colab/astrum_grpo_training.ipynb`](colab/astrum_grpo_training.ipynb) — demonstrates reward improvement, alignment trap resistance, and fairness maintenance over 50 training episodes using Unsloth GRPO on OpenEnv.
-
----
-
-## Roadmap
-
-| Phase | Timeline | What Ships |
+| Phase | Focus | Milestones |
 |-------|----------|-----------|
-| **Seed** | Now | First adaptive environment on OpenEnv. GPU-native training pipeline. |
-| **Platform** | Next | Hosted environment engine. Scenario SDK. Multi-hardware support. |
-| **Scale** | Growth | Domain-specific environment packs. Multi-agent scenarios. Enterprise API. |
-| **Global** | Mature | The default training layer for aligned, adaptive intelligence worldwide. |
-
----
-
-## Hackathon Alignment
-
-- **Statement 3.1**: World Modeling / Professional Tasks — persistent world state, multi-step adaptive dynamics.
-- **Statement 5**: Wild Card — novel environment for alignment-aware training.
-- **Partner Sub-Themes**: Patronus AI (evolving rules/policies), Fleet AI (scalable oversight).
+| **Phase 1** | Foundation | Adaptive environment stability. GPU-native training pipeline. |
+| **Phase 2** | Platformization | Hosted environment engine. Scenario SDK. Multi-hardware support. |
+| **Phase 3** | Scaling | Domain-specific environment packs. Multi-agent continuous scenarios. Enterprise API. |
+| **Phase 4** | Global Reach | The default training layer for aligned, adaptive intelligence across large platforms. |
 
 ---
 
 ## License
 
-MIT
+MIT License

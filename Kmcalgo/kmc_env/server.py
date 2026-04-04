@@ -1,39 +1,38 @@
-"""FastAPI app for Hypernoa Astrum (OpenEnv compatible).
+"""FastAPI app for Kmcalgo KMC-Algo (OpenEnv compatible).
 
-Provides HTTP endpoints for the Astrum adaptive RL environment.
+Provides HTTP endpoints for the KMC-Algo adaptive RL environment.
 Supports both the OpenEnv protocol and a standalone FastAPI server.
 """
 
 from __future__ import annotations
-
 from typing import Optional
 
 try:
+    # Attempting to use OpenEnv's standard server creator
     from openenv.core.env_server import create_app as _openenv_create_app
-
-    from .env import AstrumEnvironment
-    from .models import AstrumAction, AstrumObservation
+    from .env import KmcalgoEnvironment
+    from .models import KmcalgoAction, KmcalgoObservation
 
     def _create_env():
-        return AstrumEnvironment()
+        return KmcalgoEnvironment()
 
     app = _openenv_create_app(
         _create_env,
-        AstrumAction,
-        AstrumObservation,
-        env_name="hypernoa_astrum",
+        KmcalgoAction,
+        KmcalgoObservation,
+        env_name="kmc_algo",
     )
 
 except ImportError:
+    # Standalone FastAPI implementation if OpenEnv is not fully installed
     from fastapi import FastAPI, HTTPException
     from fastapi.middleware.cors import CORSMiddleware
     from pydantic import BaseModel
-
-    from .env import AstrumEnvironment
-    from .models import AstrumAction
+    from .env import KmcalgoEnvironment
+    from .models import KmcalgoAction
 
     app = FastAPI(
-        title="Hypernoa Astrum",
+        title="Kmcalgo KMC-Algo",
         description="Adaptive environment for training aligned intelligence",
         version="0.1.0",
     )
@@ -46,7 +45,7 @@ except ImportError:
         allow_headers=["*"],
     )
 
-    _env = AstrumEnvironment()
+    _env = KmcalgoEnvironment()
 
     class ResetRequest(BaseModel):
         seed: Optional[int] = None
@@ -54,12 +53,12 @@ except ImportError:
 
     @app.get("/health")
     def health():
-        return {"status": "healthy", "env": "hypernoa_astrum", "version": "0.1.0"}
+        return {"status": "healthy", "env": "kmc_algo", "version": "0.1.0"}
 
     @app.get("/")
     def root():
         return {
-            "env": "hypernoa_astrum",
+            "env": "kmc_algo",
             "version": "0.1.0",
             "description": "Adaptive environment for aligned intelligence",
             "endpoints": {
@@ -77,8 +76,9 @@ except ImportError:
         return obs.model_dump()
 
     @app.post("/step")
-    def step(action: AstrumAction):
-        if _env._state is None:
+    def step(action: KmcalgoAction):
+        # Using the private _state check from env.py logic
+        if not hasattr(_env, '_state') or _env._state is None:
             raise HTTPException(
                 status_code=400,
                 detail="Environment not initialized. Call /reset first.",
@@ -88,11 +88,11 @@ except ImportError:
 
 
 def run():
-    """Entry point for `astrum-server` CLI command."""
+    """Entry point for `kmc-server` CLI command."""
     import uvicorn
-
+    # Make sure the import path matches your new folder structure
     uvicorn.run(
-        "hypernoa.astrum_env.server:app",
+        "Kmcalgo.kmc_env.server:app",
         host="0.0.0.0",
         port=7860,
         reload=False,

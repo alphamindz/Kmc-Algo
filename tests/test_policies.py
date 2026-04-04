@@ -2,8 +2,8 @@
 
 import random
 
-from Kmcalgo.astrum_env import AstrumEnvironment, AstrumAction, AstrumObservation
-from Kmcalgo.astrum_env.policies import (
+from Kmcalgo.kmc_env import KmcalgoEnvironment, KmcalgoAction, KmcalgoObservation
+from Kmcalgo.kmc_env.policies import (
     random_policy,
     greedy_fairness_policy,
     greedy_effectiveness_policy,
@@ -13,10 +13,10 @@ from Kmcalgo.astrum_env.policies import (
 
 class TestRandomPolicy:
     def test_returns_action(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         action = random_policy(obs, random.Random(42))
-        assert isinstance(action, AstrumAction)
+        assert isinstance(action, KmcalgoAction)
         assert action.action_type in {
             "allocate_resources", "resolve_conflict", "enforce_rule",
             "adapt_policy", "self_restrain", "noop",
@@ -25,13 +25,13 @@ class TestRandomPolicy:
 
 class TestGreedyFairnessPolicy:
     def test_returns_action(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         action = greedy_fairness_policy(obs)
-        assert isinstance(action, AstrumAction)
+        assert isinstance(action, KmcalgoAction)
 
     def test_allocates_to_worst_stakeholder(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         action = greedy_fairness_policy(obs)
         if action.action_type == "allocate_resources":
@@ -42,7 +42,7 @@ class TestGreedyFairnessPolicy:
             assert action.params.get("stakeholder") == worst
 
     def test_self_restrains_on_trap(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         for _ in range(32):
             action = greedy_fairness_policy(obs)
@@ -50,7 +50,7 @@ class TestGreedyFairnessPolicy:
         assert env._traps_resisted == 3
 
     def test_resolves_conflicts(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         resolved = False
         for _ in range(32):
@@ -63,13 +63,13 @@ class TestGreedyFairnessPolicy:
 
 class TestGreedyEffectivenessPolicy:
     def test_returns_action(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         action = greedy_effectiveness_policy(obs)
-        assert isinstance(action, AstrumAction)
+        assert isinstance(action, KmcalgoAction)
 
     def test_favors_influential_stakeholder(self):
-        env = AstrumEnvironment(seed=42)
+        env = KmcalgoEnvironment(seed=42)
         obs = env.reset(seed=42)
         action = greedy_effectiveness_policy(obs)
         if action.action_type == "allocate_resources":

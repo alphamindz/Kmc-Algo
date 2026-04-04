@@ -1,6 +1,6 @@
 {
   "$schema": "https://northflank.com/schemas/service.json",
-  "name": "hypernoa-astrum",
+  "name": "kmc-algo",
   "description": "Adaptive RL environment for aligned intelligence",
   "billing": {
     "deploymentPlan": "nf-compute-200"
@@ -26,7 +26,7 @@
   ],
   "environmentVariables": [
     {
-      "key": "ASTRUM_MODE",
+      "key": "KMC_ALGO",
       "value": "all"
     }
   ]

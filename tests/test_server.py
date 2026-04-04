@@ -3,7 +3,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from Kmcalgo.astrum_env.server import app
+from Kmcalgo.kmc_env.server import app
 
 
 @pytest.fixture
@@ -17,7 +17,7 @@ class TestHealthEndpoint:
         assert resp.status_code == 200
         data = resp.json()
         assert data["status"] == "healthy"
-        assert data["env"] == "hypernoa_astrum"
+        assert data["env"] == "kmc_algo"
 
 
 class TestRootEndpoint:

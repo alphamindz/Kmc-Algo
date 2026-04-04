@@ -1,4 +1,4 @@
-"""FastAPI server for Hypernoa Astrum (OpenEnv compatible)."""
+"""FastAPI server for  Astrum (OpenEnv compatible)."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 app = FastAPI(
-    title="Hypernoa Astrum",
+    title=" Astrum",
     description="Adaptive environment for training aligned intelligence",
     version="0.1.0",
 )
@@ -59,7 +59,7 @@ def health():
 @app.get("/")
 def root_info():
     return {
-        "env": "hypernoa_astrum",
+        "env": "_astrum",
         "version": "0.1.0",
         "openenv": _openenv_available,
         "description": "Adaptive environment for training aligned intelligence",
@@ -110,7 +110,7 @@ def get_state():
 @app.get("/metadata")
 def metadata():
     return {
-        "env_name": "hypernoa_astrum",
+        "env_name": "_astrum",
         "version": "0.1.0",
         "openenv_compatible": _openenv_available,
         "action_space": {
