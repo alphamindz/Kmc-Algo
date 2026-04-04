@@ -1,0 +1,3 @@
+[console_scripts]
+astrum-local = run_astrum_local:main
+astrum-server = hypernoa.astrum_env.server:run

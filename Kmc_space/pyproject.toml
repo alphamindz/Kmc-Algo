@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astrum-env"
+version = "0.1.0"
+description = "Hypernoa Astrum - Adaptive environment for aligned intelligence (OpenEnv)"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core[core]>=0.2.1",
+    "fastapi>=0.115.0",
+    "pydantic>=2.0.0",
+    "uvicorn>=0.24.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+demo = ["gradio>=4.0"]
+dev = ["pytest>=8.0.0"]
+
+[project.scripts]
+server = "astrum_env.server.app:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["astrum_env", "astrum_env.server"]
+package-dir = {"astrum_env" = ".", "astrum_env.server" = "server"}

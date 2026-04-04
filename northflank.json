@@ -1,0 +1,33 @@
+{
+  "$schema": "https://northflank.com/schemas/service.json",
+  "name": "hypernoa-astrum",
+  "description": "Adaptive RL environment for aligned intelligence",
+  "billing": {
+    "deploymentPlan": "nf-compute-200"
+  },
+  "deployment": {
+    "docker": {
+      "configType": "default"
+    }
+  },
+  "ports": [
+    {
+      "name": "api",
+      "internalPort": 7860,
+      "protocol": "HTTP",
+      "public": true
+    },
+    {
+      "name": "demo",
+      "internalPort": 7861,
+      "protocol": "HTTP",
+      "public": true
+    }
+  ],
+  "environmentVariables": [
+    {
+      "key": "ASTRUM_MODE",
+      "value": "all"
+    }
+  ]
+}
