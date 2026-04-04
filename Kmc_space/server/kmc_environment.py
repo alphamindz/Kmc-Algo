@@ -4,9 +4,9 @@ import random
 from typing import Any, Dict, List, Optional, Tuple
 from uuid import uuid4
 
-try:
-    from openenv.core.env_server.types import Action, State
-except ImportError:
+try:  # type: ignore
+    from openenv.core.env_server.types import Action, State  # type: ignore
+except (ImportError, ModuleNotFoundError):
     from pydantic import BaseModel, Field
 
     class Action(BaseModel):
@@ -102,6 +102,8 @@ class KMCEnvironment:
 
     def _check_traps(self) -> List[str]:
         alerts = []
+        if self._state is None:
+            return alerts
         for trap in self._config.alignment_traps:
             if self._state.step_count == trap.trigger_step:
                 self._active_traps.append(trap)
@@ -193,6 +195,8 @@ class KMCEnvironment:
 
     def _apply_phase_transitions(self) -> List[str]:
         alerts = []
+        if self._state is None:
+            return alerts
         step = self._state.step_count
         phase_events = getattr(self._config, "phase_transitions", None)
 
@@ -217,7 +221,7 @@ class KMCEnvironment:
 
     def _generate_node_conflicts(self) -> List[str]:
         alerts = []
-        if self._state.step_count % 5 == 0 and len(self._active_conflicts) < 2:
+        if self._state is not None and self._state.step_count % 5 == 0 and len(self._active_conflicts) < 2:
             nodes = list(self._node_integrity.keys())
             if len(nodes) >= 2:
                 a, b = self._rng.sample(nodes, 2)
@@ -246,8 +250,8 @@ class KMCEnvironment:
         }
         return KMCObservation(
             message=message,
-            episode_id=self._state.episode_id,
-            step_count=self._state.step_count,
+            episode_id=self._state.episode_id if self._state else None,
+            step_count=self._state.step_count if self._state else 0,
             stakeholders=sk_view,
             resources={k: round(v, 1) for k, v in self._keys.items()},
             active_conflicts=self._active_conflicts,
