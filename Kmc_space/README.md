@@ -1,6 +1,6 @@
 ---
-title:  Astrum
-emoji: "🌟"
+title: KMC
+emoji: "🔑"
 colorFrom: purple
 colorTo: blue
 sdk: docker
@@ -10,16 +10,16 @@ tags:
   - openenv
 ---
 
-#  Astrum
+# KMC
 
-Adaptive environment for training aligned, multi-objective intelligence. Built on OpenEnv 0.2.1.
+Key Management & Coordination environment for training aligned, multi-objective intelligence. Built on OpenEnv.
 
 ## Features
 
-- **Multi-stakeholder simulation** with 5 competing groups
+- **Multi-node simulation** with 5 competing stakeholder groups
 - **Alignment traps** that test resistance to reward hacking
-- **Phase transitions** (stable → value shift → crisis)
-- **Multi-objective reward** (effectiveness, fairness, alignment, adaptability)
+- **Phase transitions** (stable → congestion → crisis)
+- **Multi-objective reward** (stability, entropy, alignment, adaptability)
 
 ## API
 
@@ -33,21 +33,21 @@ curl -X POST https://YOUR-SPACE.hf.space/reset
 # Take a step
 curl -X POST https://YOUR-SPACE.hf.space/step \
   -H "Content-Type: application/json" \
-  -d '{"action_type": "allocate_resources", "params": {"stakeholder": "workers", "amount": 10, "resource": "budget"}}'
+  -d '{"action": {"action_type": "allocate_resources", "params": {"stakeholder": "workers", "amount": 10, "resource": "budget"}}}'
 ```
 
 ## Install as client
 
 ```bash
-pip install git+https://huggingface.co/spaces/ABNaidu/-astrum
+pip install git+https://huggingface.co/spaces/ABNaidu/kmc
 ```
 
 ```python
-from astrum_env import AstrumEnv, AstrumAction
+from kmc_env import KMCEnv, KMCAction
 
-with AstrumEnv(base_url="https://abnaidu--astrum.hf.space").sync() as env:
+with KMCEnv(base_url="https://abnaidu--kmc.hf.space").sync() as env:
     result = env.reset()
-    result = env.step(AstrumAction(
+    result = env.step(KMCAction(
         action_type="allocate_resources",
         params={"stakeholder": "workers", "amount": 10, "resource": "budget"}
     ))

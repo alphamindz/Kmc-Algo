@@ -1,6 +1,13 @@
-""" Astrum - OpenEnv environment for training aligned intelligence."""
+from .kmc_environment import KMCEnvironment
+from .kmc_client import KMCEnv
+from .models import KMCAction, KMCObservation
+from .config import KMCConfig, DEFAULT_CONFIG
 
-from .models import AstrumAction, AstrumObservation
-from .client import AstrumEnv
-
-__all__ = ["AstrumAction", "AstrumObservation", "AstrumEnv"]
+__all__ = [
+    "KMCEnvironment",
+    "KMCEnv",
+    "KMCAction",
+    "KMCObservation",
+    "KMCConfig",
+    "DEFAULT_CONFIG",
+]

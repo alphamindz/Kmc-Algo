@@ -1,0 +1,14 @@
+from openenv.core.env_client import EnvClient
+
+from .models import KMCAction, KMCObservation
+
+
+class KMCEnv(EnvClient[KMCAction, KMCObservation]):
+
+    @property
+    def action_type(self):
+        return KMCAction
+
+    @property
+    def observation_type(self):
+        return KMCObservation

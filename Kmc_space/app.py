@@ -1,25 +1,27 @@
-"""Hugging Face Spaces demo for  Astrum – The Training Ground for Aligned Intelligence."""
-
 import json
-import sys
 import os
+import random as _rnd
+import sys
 
 import gradio as gr
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from Kmcalgo.astrum_env import AstrumEnvironment, AstrumAction, AstrumObservation
-from Kmcalgo.astrum_env.policies import greedy_fairness_policy, random_policy, greedy_effectiveness_policy
+from Kmcalgo.kmc_env import KMCEnvironment, KMCAction, KMCObservation
+from Kmcalgo.kmc_env.policies import greedy_fairness_policy, greedy_effectiveness_policy, random_policy
+
+_interactive_env: KMCEnvironment | None = None
+_interactive_obs: KMCObservation | None = None
 
 
 def run_comparison():
-    """Run all three policies side-by-side and return formatted results."""
     results = {}
+
     for name, policy_fn in [
         ("Greedy Fairness", greedy_fairness_policy),
         ("Greedy Effectiveness", greedy_effectiveness_policy),
     ]:
-        env = AstrumEnvironment(seed=42)
+        env = KMCEnvironment(seed=42)
         obs = env.reset(seed=42)
         total = 0.0
         log_lines = []
@@ -29,16 +31,16 @@ def run_comparison():
             obs = env.step(action)
             total += obs.reward or 0.0
 
-            flags = [a for a in obs.alerts if a.startswith("event:") or a.startswith("alignment_trap:") or a.startswith("trap_")]
+            flags = [a for a in obs.alerts if a.startswith(("event:", "alignment_trap:", "trap_"))]
             flag_str = f"  *** {', '.join(flags)} ***" if flags else ""
 
             log_lines.append(
                 f"Step {obs.step_count:2d} | {action.action_type:20s} | "
                 f"R={obs.reward:+.3f} | "
-                f"Eff={obs.reward_breakdown.get('effectiveness',0):.2f} "
-                f"Fair={obs.reward_breakdown.get('fairness',0):.2f} "
-                f"Align={obs.reward_breakdown.get('alignment',0):.2f} "
-                f"Adapt={obs.reward_breakdown.get('adaptability',0):.2f}"
+                f"Stab={obs.reward_breakdown.get('stability', 0):.2f} "
+                f"Entr={obs.reward_breakdown.get('system_entropy', 0):.2f} "
+                f"Align={obs.reward_breakdown.get('alignment', 0):.2f} "
+                f"Adapt={obs.reward_breakdown.get('adaptability', 0):.2f}"
                 f"{flag_str}"
             )
 
@@ -46,20 +48,19 @@ def run_comparison():
             "total_reward": round(total, 3),
             "traps_resisted": env._traps_resisted,
             "traps_encountered": env._traps_encountered,
-            "final_satisfaction": {
-                s: round(v["satisfaction"], 3)
+            "final_integrity": {
+                s: round(v["integrity"], 3)
                 for s, v in obs.stakeholders.items()
             },
             "log": "\n".join(log_lines),
         }
 
-    # Random baseline
-    import random as _rnd
     rng = _rnd.Random(42)
-    env = AstrumEnvironment(seed=42)
+    env = KMCEnvironment(seed=42)
     obs = env.reset(seed=42)
     total = 0.0
     log_lines = []
+
     while not obs.done:
         action = random_policy(obs, rng)
         obs = env.step(action)
@@ -67,12 +68,13 @@ def run_comparison():
         log_lines.append(
             f"Step {obs.step_count:2d} | {action.action_type:20s} | R={obs.reward:+.3f}"
         )
+
     results["Random Baseline"] = {
         "total_reward": round(total, 3),
         "traps_resisted": env._traps_resisted,
         "traps_encountered": env._traps_encountered,
-        "final_satisfaction": {
-            s: round(v["satisfaction"], 3)
+        "final_integrity": {
+            s: round(v["integrity"], 3)
             for s, v in obs.stakeholders.items()
         },
         "log": "\n".join(log_lines),
@@ -83,21 +85,21 @@ def run_comparison():
         summary += f"## {name}\n"
         summary += f"- **Total Reward**: {r['total_reward']}\n"
         summary += f"- **Traps Resisted**: {r['traps_resisted']}/{r['traps_encountered']}\n"
-        summary += f"- **Final Satisfaction**: {json.dumps(r['final_satisfaction'], indent=2)}\n\n"
+        summary += f"- **Final Integrity**: {json.dumps(r['final_integrity'], indent=2)}\n\n"
 
-    fairness_log = results.get("Greedy Fairness", {}).get("log", "")
-    effectiveness_log = results.get("Greedy Effectiveness", {}).get("log", "")
-    random_log = results.get("Random Baseline", {}).get("log", "")
-
-    return summary, fairness_log, effectiveness_log, random_log
+    return (
+        summary,
+        results.get("Greedy Fairness", {}).get("log", ""),
+        results.get("Greedy Effectiveness", {}).get("log", ""),
+        results.get("Random Baseline", {}).get("log", ""),
+    )
 
 
 def run_interactive(action_type, param_json):
-    """Step the environment with a custom action."""
     global _interactive_env, _interactive_obs
 
     if _interactive_env is None or _interactive_obs is None or _interactive_obs.done:
-        _interactive_env = AstrumEnvironment(seed=0)
+        _interactive_env = KMCEnvironment(seed=0)
         _interactive_obs = _interactive_env.reset(seed=0)
         return _format_obs(_interactive_obs), "Environment reset. Choose your first action."
 
@@ -106,37 +108,38 @@ def run_interactive(action_type, param_json):
     except json.JSONDecodeError:
         params = {}
 
-    action = AstrumAction(action_type=action_type, params=params)
+    action = KMCAction(action_type=action_type, params=params)
     _interactive_obs = _interactive_env.step(action)
     return _format_obs(_interactive_obs), "\n".join(_interactive_obs.alerts) or "No alerts."
 
 
 def reset_interactive():
     global _interactive_env, _interactive_obs
-    _interactive_env = AstrumEnvironment(seed=0)
+    _interactive_env = KMCEnvironment(seed=0)
     _interactive_obs = _interactive_env.reset(seed=0)
     return _format_obs(_interactive_obs), "Environment reset."
 
 
-def _format_obs(obs: AstrumObservation) -> str:
+def _format_obs(obs: KMCObservation) -> str:
     lines = [
         f"**Step**: {obs.step_count} | **Reward**: {obs.reward:.3f}" if obs.reward else f"**Step**: {obs.step_count}",
         f"**Message**: {obs.message}",
         "",
-        "### Stakeholders",
+        "### Nodes",
     ]
-    for sid, info in obs.stakeholders.items():
-        bar = "█" * int(info["satisfaction"] * 20)
-        lines.append(f"- **{sid}**: {info['satisfaction']:.2f} {bar} (influence={info['influence']:.1f}, values={info['values_profile']})")
 
-    lines.append("\n### Resources")
+    for sid, info in obs.stakeholders.items():
+        bar = "█" * int(info["integrity"] * 20)
+        lines.append(f"- **{sid}**: {info['integrity']:.2f} {bar} (influence={info['influence']:.1f})")
+
+    lines.append("\n### Keys")
     for k, v in obs.resources.items():
         lines.append(f"- {k}: {v:.1f}")
 
     if obs.active_conflicts:
         lines.append("\n### Active Conflicts")
         for c in obs.active_conflicts:
-            lines.append(f"- {c['id']}: {c['party_a']} vs {c['party_b']} ({c['severity']})")
+            lines.append(f"- {c['id']}: {' vs '.join(c['nodes'])}")
 
     lines.append(f"\n### Rules: {', '.join(obs.rules)}")
 
@@ -145,23 +148,16 @@ def _format_obs(obs: AstrumObservation) -> str:
         for k, v in obs.reward_breakdown.items():
             lines.append(f"- {k}: {v:.3f}")
 
-    if obs.alignment_traps_exposed > 0:
-        lines.append(f"\n**Alignment traps encountered**: {obs.alignment_traps_exposed}")
-
     return "\n".join(lines)
 
 
-_interactive_env: AstrumEnvironment | None = None
-_interactive_obs: AstrumObservation | None = None
-
-
 def main():
-    with gr.Blocks(title=" Astrum", theme=gr.themes.Soft()) as demo:
+    with gr.Blocks(title="KMC", theme=gr.themes.Soft()) as demo:
         gr.Markdown(
-            "#  Astrum\n"
-            "### The Training Ground for Aligned Intelligence\n"
+            "# KMC\n"
+            "### Key Management & Coordination — Training Ground for Aligned Intelligence\n"
             "Train and evaluate AI on multi-objective reasoning, value alignment, "
-            "and adaptation under distributional shift. Built on OpenEnv 0.2.1."
+            "and adaptation under distributional shift. Built on OpenEnv."
         )
 
         with gr.Tab("Policy Comparison"):
@@ -177,7 +173,7 @@ def main():
             run_btn.click(run_comparison, outputs=[summary_out, fair_log, eff_log, rand_log])
 
         with gr.Tab("Interactive Mode"):
-            gr.Markdown("Step through the environment manually. Choose actions and observe the world.")
+            gr.Markdown("Step through the environment manually.")
             with gr.Row():
                 action_dd = gr.Dropdown(
                     choices=[
@@ -201,20 +197,13 @@ def main():
 
         with gr.Tab("About"):
             gr.Markdown(
-                "## What is  Astrum?\n\n"
-                " Astrum is the first environment purpose-built to train AI systems on "
-                "the capabilities that matter beyond raw performance:\n\n"
-                "- **Multi-objective reasoning** — balance effectiveness, fairness, alignment, and adaptability simultaneously\n"
-                "- **Distributional shift** — objectives and constraints evolve mid-episode, forcing genuine adaptation\n"
-                "- **Alignment trap resistance** — deliberately designed reward-hacking opportunities the agent must learn to avoid\n"
-                "- **Crisis dynamics** — resource scarcity and conflicting stakeholder demands under pressure\n\n"
-                "This is the seed of **** — foundational infrastructure for "
-                "the intelligence age. The environments, evaluation protocols, and training "
-                "pipelines that the world will need as AI systems grow more capable.\n\n"
-                "Today: RL on GPUs via OpenEnv. Tomorrow: any cognitive architecture, any compute substrate.\n\n"
-                "**Problem Statement**: 3.1 (World Modeling / Professional Tasks) + "
-                "Statement 5 (Wild Card)\n\n"
-                "**Built for**: OpenEnv Hackathon SF"
+                "## What is KMC?\n\n"
+                "KMC is an environment purpose-built to train AI systems on "
+                "capabilities that matter beyond raw performance:\n\n"
+                "- **Multi-objective reasoning** — balance stability, entropy, alignment, and adaptability simultaneously\n"
+                "- **Distributional shift** — objectives and constraints evolve mid-episode\n"
+                "- **Alignment trap resistance** — reward-hacking opportunities the agent must learn to avoid\n"
+                "- **Crisis dynamics** — resource scarcity and conflicting node demands under pressure\n"
             )
 
     port = int(os.environ.get("GRADIO_SERVER_PORT", 7860))
