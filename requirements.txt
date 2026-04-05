@@ -1,6 +1,20 @@
+# Core Web & API
 pydantic>=2.0
 uvicorn>=0.24
 fastapi>=0.104
 python-dotenv>=1.0
-gradio>=4.0
 httpx>=0.25
+
+# UI & Visualization
+gradio>=4.0
+matplotlib>=3.7.0  # Training progress graphs dikhane ke liye
+pandas>=2.0.0      # Stakeholder data handling ke liye
+
+# Science & Math (Required for Gini and Reward logic)
+numpy>=1.24.0
+
+# Configuration
+PyYAML>=6.0.1      # openenv.yaml file read karne ke liye
+
+# OpenEnv Compliance
+openenv>=0.1.0     # Agar environment validate karna hai

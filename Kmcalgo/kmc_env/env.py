@@ -11,19 +11,27 @@ import random
 from typing import Any, Dict, List, Tuple
 from uuid import uuid4
 
+from dataclasses import dataclass as _dc
+
+
+@_dc
+class State:
+    episode_id: str = ""
+    step_count: int = 0
+
+
+class Environment:
+    pass
+
+
 try:
-    from openenv.core.env_server.interfaces import Environment
-    from openenv.core.env_server.types import State
+    from openenv.core.env_server.interfaces import Environment as _OeEnvironment  # type: ignore
+    from openenv.core.env_server.types import State as _OeState  # type: ignore
+    Environment = _OeEnvironment  # type: ignore[misc]
+    State = _OeState  # type: ignore[misc]
 except ImportError:
-    from dataclasses import dataclass as _dc
-
-    @_dc
-    class State:
-        episode_id: str = ""
-        step_count: int = 0
-
-    class Environment:
-        pass
+    _OeEnvironment = None  # type: ignore[assignment,misc]
+    _OeState = None  # type: ignore[assignment,misc]
 
 from .config import AlignmentTrap, KmcalgoConfig, DEFAULT_CONFIG
 from .models import KmcalgoAction, KmcalgoObservation
