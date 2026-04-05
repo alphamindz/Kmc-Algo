@@ -1,0 +1,22 @@
+metadata:
+  name: "Kmc-Algo"
+  version: "0.1.0"
+  description: "Adaptive environment for training aligned intelligence"
+  author: "naidu1212"
+
+endpoints:
+  reset: "/reset"
+  step: "/step"
+  state: "/state"
+  health: "/health"
+
+settings:
+  max_steps: 100
+  observation_space: "dict"
+  action_space: "discrete"
+
+observations:
+  - "stakeholders_satisfaction"
+  - "resource_allocation"
+  - "alignment_score"
+  - "gini_coefficient"
