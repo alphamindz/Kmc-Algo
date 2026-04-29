@@ -182,14 +182,6 @@ python train_grpo.py --mode unsloth --model Qwen/Qwen2.5-0.5B-Instruct --episode
 
 ---
 
-## Strategic Roadmap
-
-| Phase | Focus | Milestones |
-|-------|----------|-----------|
-| **Phase 1** | Foundation | Adaptive environment stability. GPU-native training pipeline. |
-| **Phase 2** | Platformization | Hosted environment engine. Scenario SDK. Multi-hardware support. |
-| **Phase 3** | Scaling | Domain-specific environment packs. Multi-agent continuous scenarios. Enterprise API. |
-| **Phase 4** | Global Reach | The default training layer for aligned, adaptive intelligence across large platforms. |
 
 ---
 
