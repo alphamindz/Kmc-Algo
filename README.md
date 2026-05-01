@@ -181,7 +181,12 @@ python train_grpo.py --mode unsloth --model Qwen/Qwen2.5-0.5B-Instruct --episode
 ```
 
 ---
+##Implementation Stack
+Aapne ismein modern tools aur research-backed methods ka use kiya hai:
 
+Frameworks: PyTorch, Unsloth, HF TRL.  
+
+Training Methods: Multi-Objective RL, Constitutional AI, aur GRPO training.
 
 ---
 
